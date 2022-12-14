@@ -1,13 +1,16 @@
 {
   "name": "infra-drift-snapshotter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Capture infrastructure state and compare drift between approved snapshots.",
   "type": "module",
+  "bin": { "infra-drift-snapshotter": "./bin/infra-drift-snapshotter.mjs" },
   "engines": {
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test"
+    "lint": "node --check src/index.mjs && node --check bin/infra-drift-snapshotter.mjs",
+    "test": "node --test",
+    "check": "npm run lint && npm test"
   },
   "license": "MIT",
   "repository": {
