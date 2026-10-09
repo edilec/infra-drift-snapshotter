@@ -8,7 +8,7 @@ import { compareSnapshots, LIMITS, parseStrictJson } from '../src/index.mjs';
 
 const resource = (address = 'module.sample.instance', attributes = { size: 'small', observedAt: 'yesterday', secret: 'hidden' }) => ({ address, attributes, sensitiveFields: Object.hasOwn(attributes, 'secret') ? ['secret'] : [] });
 const doc = (before = [resource()], after = [resource()]) => ({ schemaVersion: '1', complete: true, approved: { complete: true, resources: before }, observed: { complete: true, resources: after } });
-const run = (root, input) => spawnSync(process.execPath, ['bin/infra-drift-snapshotter.mjs', '--root', root, '--input', input], { cwd: new URL('..', import.meta.url), encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '--import=/Users/km/Desktop/web/open-source/migration-plan-template/support/deny-network.mjs' } });
+const run = (root, input) => spawnSync(process.execPath, ['bin/infra-drift-snapshotter.mjs', '--root', root, '--input', input], { cwd: new URL('..', import.meta.url), encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: `--import=${new URL('../../migration-plan-template/support/deny-network.mjs', import.meta.url).href}` } });
 
 test('good complete equal exports pass; volatile and marked sensitive values are excluded', () => {
   const x = doc([resource()], [resource('module.sample.instance', { size: 'small', observedAt: 'today', secret: 'changed' })]);
